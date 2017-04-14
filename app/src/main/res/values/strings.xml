@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MovieLand</string>
+    <string name="menu_sort_popular">Most Popular</string>
+    <string name="menu_sort_rated">Highly Rated</string>
+</resources>
