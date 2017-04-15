@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            app:srcCompat="@mipmap/ic_launcher"
+            android:id="@+id/iv_dv_poster"
+            android:layout_weight="1"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingLeft="20dp">
+
+            <TextView
+                android:text="TextView"
+                android:textSize="@dimen/large_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_dv_title"
+                android:paddingBottom="5dp"/>
+            <TextView
+                android:text="TextView"
+                android:textSize="@dimen/medium_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_dv_rating"
+                android:paddingBottom="5dp"/>
+            <TextView
+                android:text="TextView"
+                android:textSize="@dimen/medium_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_dv_release_date"
+                android:paddingBottom="5dp"/>
+            <TextView
+                android:text="TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_dv_popularity"
+                android:paddingBottom="5dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:text="TextView"
+        android:textSize="@dimen/small_text"
+        android:gravity="top|left"
+        android:inputType="textMultiLine"
+        android:scrollHorizontally="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_dv_synopsis"/>
+</LinearLayout>
