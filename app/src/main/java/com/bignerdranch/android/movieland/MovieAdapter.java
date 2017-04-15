@@ -8,7 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Kigold on 4/14/2017.
@@ -16,16 +19,40 @@ import java.util.ArrayList;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapterViewHolder>{
 
-    //TODO get mMovies from API
     private ArrayList<MovieDataType> mMoviesData;
 
-    public class MovieAdapterViewHolder extends RecyclerView.ViewHolder{
+    private final MovieAdapterOnClickHandler mClickHandler;
+
+
+
+
+    // click handler interface
+
+    public interface MovieAdapterOnClickHandler {
+        void onClick(MovieDataType movie);
+    }
+
+    public MovieAdapter(MovieAdapterOnClickHandler clickHandler) {
+        mClickHandler = clickHandler;
+    }
+
+
+    public class MovieAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public final ImageView mMoviePosterView;
 
         public MovieAdapterViewHolder(View view) {
             super(view);
             mMoviePosterView = (ImageView) view.findViewById(R.id.iv_movie_poster);
+
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int adapterPosition = getAdapterPosition();
+            MovieDataType movie = mMoviesData.get(adapterPosition);
+            mClickHandler.onClick(movie);
         }
     }
 
@@ -42,7 +69,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     @Override
     public void onBindViewHolder(MovieAdapterViewHolder holder, int position) {
         MovieDataType daMovie = mMoviesData.get(position);
-        holder.mMoviePosterView.setImageResource(daMovie.getPoster_image());
+        Context context = holder.itemView.getContext();
+        //holder.mMoviePosterView.setImageResource(daMovie.getPoster_image());
+        holder.mMoviePosterView.setImageResource(R.mipmap.ic_launcher);
+        Picasso.with(context)
+                .load(daMovie.getPoster_image())
+                .placeholder(R.mipmap.ic_launcher)
+                .error(R.mipmap.ic_launcher)
+                .into(holder.mMoviePosterView);
 
     }
 

@@ -1,5 +1,6 @@
 package com.bignerdranch.android.movieland;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,13 +21,13 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MovieAdapter.MovieAdapterOnClickHandler{
 
     private RecyclerView mRecyclerView;
     private MovieAdapter mMovieAdapter;
     private TextView mErrorMessage;
     private ProgressBar mProgressBar;
-    private final int NUMBER_OF_ITEMS_IN_GRIDVIEW = 2;
+    private final int NUMBER_OF_ITEMS_IN_GRIDVIEW = 4;
     private static final String MOVIES_API_KEY = BuildConfig.MOVIES_API_KEY;
 
 
@@ -44,21 +45,32 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(layoutManager);
 
         mRecyclerView.setHasFixedSize(true);
-        mMovieAdapter = new MovieAdapter();
+        mMovieAdapter = new MovieAdapter(this);
         mRecyclerView.setAdapter(mMovieAdapter);
 
         //init progress bar
         mProgressBar = (ProgressBar) findViewById(R.id.pb_progress_bar);
         //load movies
-        loadMovieData();
+        loadMovieData(null);
     }
-    private void loadMovieData() {
+    private void loadMovieData(String choice) {
         showMovieDataView();
         //TODO get menu sort item from persistent data source
-        String sort_choice = "Highest_Rated";
-        // "Most_popular" or "Highest_Rated"
+        String sort_choice = "top_rated";
+        if (choice != null) {
+            sort_choice = choice;
+        }
+        // "popular" or "top_rated"
         new GetMoviesTask().execute(sort_choice);
     }
+
+    @Override
+    public void onClick(MovieDataType movie) {
+        Context context = this;
+        Toast.makeText(context, movie.getOriginal_title(), Toast.LENGTH_SHORT)
+                .show();
+    }
+
     private void showMovieDataView(){
         // hide error message view
         mErrorMessage.setVisibility(View.INVISIBLE);
@@ -99,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(ArrayList<MovieDataType>    moviesData) {
+        protected void onPostExecute(ArrayList<MovieDataType> moviesData) {
             mProgressBar.setVisibility(View.INVISIBLE);
             if (moviesData != null) {
                 showMovieDataView();
@@ -121,18 +133,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
     int id = item.getItemId();
-
+        // "popular" or "top_rated"
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.menu_highest_rated:
                 item.setChecked(true);
                 Toast.makeText(getApplicationContext(), "Sort By Highest Rated", Toast.LENGTH_LONG).show();
-                //TODO set sort value and then reload recycleVIew
+                mMovieAdapter.setData(null);
+                loadMovieData("top_rated");
                 return true;
             case R.id.menu_most_popular:
                 item.setChecked(true);
                 Toast.makeText(getApplicationContext(), "Sort By Most Popular", Toast.LENGTH_LONG).show();
-                //TODO set sort value and then reload recycleVIew
+                mMovieAdapter.setData(null);
+                loadMovieData("popular");
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

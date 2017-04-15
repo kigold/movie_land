@@ -9,19 +9,29 @@ import java.util.Date;
 
 public class MovieDataType {
     private String original_title, synopsis;
-    private int user_rating;
-    private Date release_date;
-    private int poster_image;
+    private double user_rating;
+    private String release_date;
+    private String poster_image;
+    private double popularity;
 
     //constructor
 
 
-    public MovieDataType(String original_title, String synopsis, int user_rating, int poster_image) {
+    public MovieDataType(String original_title, String synopsis, double user_rating, String release_date, String poster_image, double popularity) {
         this.original_title = original_title;
         this.synopsis = synopsis;
         this.user_rating = user_rating;
         this.release_date = release_date;
-        this.poster_image = poster_image;
+        this.poster_image = "http://image.tmdb.org/t/p/w185" + poster_image;
+        this.popularity = popularity;
+    }
+
+    public double getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(double popularity) {
+        this.popularity = popularity;
     }
 
     public String getOriginal_title() {
@@ -40,27 +50,27 @@ public class MovieDataType {
         this.synopsis = synopsis;
     }
 
-    public int getUser_rating() {
+    public double getUser_rating() {
         return user_rating;
     }
 
-    public void setUser_rating(int user_rating) {
+    public void setUser_rating(double user_rating) {
         this.user_rating = user_rating;
     }
 
-    public Date getRelease_date() {
+    public String getRelease_date() {
         return release_date;
     }
 
-    public void setRelease_date(Date release_date) {
+    public void setRelease_date(String release_date) {
         this.release_date = release_date;
     }
 
-    public int getPoster_image() {
+    public String getPoster_image() {
         return poster_image;
     }
 
-    public void setPoster_image(int poster_image) {
+    public void setPoster_image(String poster_image) {
         this.poster_image = poster_image;
     }
 
@@ -68,19 +78,19 @@ public class MovieDataType {
         ArrayList<MovieDataType> movies = new ArrayList<>();
         movies.add(new MovieDataType("Naruto",
                 "About a young man who wanted to becomee hokage",
-                5, R.mipmap.ic_launcher)
+                5, "",  "", 23)
                 );
         movies.add(new MovieDataType("Boruto",
                 "About a young Boy who wanted to be like his fathe",
-                5, R.mipmap.ic_launcher)
+                5, "", "", 23)
         );
         movies.add(new MovieDataType("Hinata",
                 "About a a chick in love",
-                5, R.mipmap.ic_launcher)
+                5, "","", 23)
         );
         movies.add(new MovieDataType("Jiraya",
                 "About a Pervy Sage",
-                5, R.mipmap.ic_launcher)
+                5, "",  "", 23)
         );
         return movies;
     }

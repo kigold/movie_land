@@ -23,13 +23,13 @@ public class NetworkUtils {
     private static final String TAG = NetworkUtils.class.getSimpleName();
 
     private static final String MOVIES_URL =
-            "https://api.themoviedb.org/3/movie/550";
+            "https://api.themoviedb.org/3/movie";
     private static final String API_KEY = BuildConfig.MOVIES_API_KEY;;
 
 
     public static java.net.URL buildUrl(String sort_param) {
         Uri builtUri = Uri.parse(MOVIES_URL).buildUpon()
-                .appendQueryParameter("sort", sort_param)
+                .appendPath(sort_param)
                 .appendQueryParameter("api_key", API_KEY)
                 .build();
         URL url = null;
@@ -53,13 +53,18 @@ public class NetworkUtils {
 
             boolean hasInput = scanner.hasNext();
             if (hasInput) {
+                Log.v(TAG, "Built URI " + url);
                 return scanner.next();
             } else {
                 return null;
             }
-        } finally {
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        finally {
             urlConnection.disconnect();
         }
+        return null;
     }
 }
 
