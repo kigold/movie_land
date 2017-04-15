@@ -1,6 +1,7 @@
 package com.bignerdranch.android.movieland;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -22,6 +23,8 @@ public class DetailedView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed_view);
 
+
+
         mTitle = (TextView) findViewById(R.id.tv_dv_title);
         mSynopsis = (TextView) findViewById(R.id.tv_dv_synopsis);
         mReleaseDate = (TextView) findViewById(R.id.tv_dv_release_date);
@@ -40,8 +43,8 @@ public class DetailedView extends AppCompatActivity {
                 mSynopsis.setText(mMovie.getSynopsis());
                 mReleaseDate.setText(mMovie.getRelease_date());
                 //TODO cast popularit and rating to string
-                mPopularity.setText("Testing");
-                mReleaseDate.setText("Testing");
+                mPopularity.setText(Double.toString(mMovie.getPopularity()));
+                mRating.setText(Double.toString(mMovie.getUser_rating()));
                 Picasso.with(getApplicationContext())
                         .load(mMovie.getPoster_image())
                         .placeholder(R.mipmap.ic_launcher)

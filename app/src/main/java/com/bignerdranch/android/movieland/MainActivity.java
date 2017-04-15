@@ -73,8 +73,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     public void onClick(MovieDataType movie) {
         Context context = this;
         Intent i = new Intent();
-        i.putExtra(MOVIE_DATA_FOR_INTENT, "MOVIE EXTRA DATA");
         i.setClass(this, DetailedView.class);
+        i.putExtra(MOVIE_DATA_FOR_INTENT, movie.getAsJsonData());
         startActivity(i);
         Toast.makeText(context, movie.getOriginal_title(), Toast.LENGTH_SHORT)
                 .show();
