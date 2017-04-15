@@ -71,7 +71,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
         MovieDataType daMovie = mMoviesData.get(position);
         Context context = holder.itemView.getContext();
         //holder.mMoviePosterView.setImageResource(daMovie.getPoster_image());
-        holder.mMoviePosterView.setImageResource(R.mipmap.ic_launcher);
+        //holder.mMoviePosterView.setImageResource(R.mipmap.ic_launcher);
         Picasso.with(context)
                 .load(daMovie.getPoster_image())
                 .placeholder(R.mipmap.ic_launcher)

@@ -1,7 +1,11 @@
 package com.bignerdranch.android.movieland;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.provider.SyncStateContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -28,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     private TextView mErrorMessage;
     private ProgressBar mProgressBar;
     private final int NUMBER_OF_ITEMS_IN_GRIDVIEW = 4;
+    private final String MOVIE_DATA_FOR_INTENT = "MOVIE_DATA";
     private static final String MOVIES_API_KEY = BuildConfig.MOVIES_API_KEY;
 
 
@@ -67,6 +72,10 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     @Override
     public void onClick(MovieDataType movie) {
         Context context = this;
+        Intent i = new Intent();
+        i.putExtra(MOVIE_DATA_FOR_INTENT, "MOVIE EXTRA DATA");
+        i.setClass(this, DetailedView.class);
+        startActivity(i);
         Toast.makeText(context, movie.getOriginal_title(), Toast.LENGTH_SHORT)
                 .show();
     }
@@ -152,4 +161,5 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
                 return super.onOptionsItemSelected(item);
         }
     }
+
 }

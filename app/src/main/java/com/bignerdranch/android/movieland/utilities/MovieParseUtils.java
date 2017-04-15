@@ -39,7 +39,8 @@ public class MovieParseUtils {
                     ,mv.getDouble("vote_average")
                     ,mv.getString("release_date")
                     ,mv.getString("poster_path")
-                    ,mv.getDouble("popularity"));
+                    ,mv.getDouble("popularity")
+                    ,mv.toString());
 
                     //add movie to List
                     movies.add(movie);
