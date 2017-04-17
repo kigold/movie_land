@@ -23,7 +23,7 @@
         </menu>
     </item>
     <item
-        android:title="@string/menu_sort"
+        android:title="@string/menu_grid_size"
         >
     <!-- grid view size group -->
         <menu>
