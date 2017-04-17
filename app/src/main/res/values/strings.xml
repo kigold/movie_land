@@ -9,4 +9,5 @@
     <string name="menu_three">3</string>
     <string name="menu_four">4</string>
     <string name="menu_five">5</string>
+    <string name="error_msg">ERROR, Data from source cannot be retrieved at this time, Ensure your phone is connected to the internet and try again</string>
 </resources>

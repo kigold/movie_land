@@ -13,6 +13,10 @@
 
     <TextView
         android:id="@+id/tv_errro_msg"
+        android:text="@string/error_msg"
+        android:textSize="@dimen/large_text"
+        android:textColor="@color/errorMsg"
+        android:padding="@dimen/heavy_padding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 

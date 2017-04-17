@@ -121,46 +121,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
             }
         }
     }
-/*
-    public class GetMoviesTask extends AsyncTask<String, Void, ArrayList<MovieDataType>> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            mProgressBar.setVisibility(View.VISIBLE);
-        }
-
-        @Override
-        protected ArrayList<MovieDataType> doInBackground(String... params) {
-            //TODO fetch movies from api
-            //ArrayList<MovieDataType> movies = MovieDataType.get_seed_data();
-            String sort_choice = params[0];
-            URL movieReqestUrl = NetworkUtils.buildUrl(sort_choice);
-            try {
-                String jsonMovieResponse = NetworkUtils
-                        .getResponseFromHttpUrl(movieReqestUrl);
-
-                ArrayList<MovieDataType> movies = MovieParseUtils
-                        .getMovieFromHttpRequest(getApplicationContext(), jsonMovieResponse);
-                return movies;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-
-
-        @Override
-        protected void onPostExecute(ArrayList<MovieDataType> moviesData) {
-            mProgressBar.setVisibility(View.INVISIBLE);
-            if (moviesData != null) {
-                showMovieDataView();
-                mMovieAdapter.setData(moviesData);
-            }else{
-                showErro();
-            }
-        }
-    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
