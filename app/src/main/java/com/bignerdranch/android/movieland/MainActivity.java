@@ -18,6 +18,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bignerdranch.android.movieland.utilities.AsyncTaskGetMovies;
+import com.bignerdranch.android.movieland.utilities.GetMoviesTask;
 import com.bignerdranch.android.movieland.utilities.MovieParseUtils;
 import com.bignerdranch.android.movieland.utilities.NetworkUtils;
 
@@ -31,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     private MovieAdapter mMovieAdapter;
     private TextView mErrorMessage;
     private ProgressBar mProgressBar;
-    private final int NUMBER_OF_ITEMS_IN_GRIDVIEW = 4;
+    private int NUMBER_OF_ITEMS_IN_GRIDVIEW = 2;
     private final String MOVIE_DATA_FOR_INTENT = "MOVIE_DATA";
     private static final String MOVIES_API_KEY = BuildConfig.MOVIES_API_KEY;
 
@@ -41,7 +43,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_movie_recycle_view);
         mErrorMessage = (TextView) findViewById(R.id.tv_errro_msg);
@@ -58,6 +59,12 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         //load movies
         loadMovieData(null);
     }
+    private void resizeGrid(int size) {
+        GridLayoutManager layoutManager = new GridLayoutManager(this, size);
+        mRecyclerView.setLayoutManager(layoutManager);
+
+
+    }
     private void loadMovieData(String choice) {
         showMovieDataView();
         //TODO get menu sort item from persistent data source
@@ -66,7 +73,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
             sort_choice = choice;
         }
         // "popular" or "top_rated"
-        new GetMoviesTask().execute(sort_choice);
+        //new GetMoviesTask().execute(sort_choice);
+        new GetMoviesTask(this, new GetMovieTaskCompleteListner()).execute(sort_choice);
     }
 
     @Override
@@ -93,6 +101,27 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mRecyclerView.setVisibility(View.INVISIBLE);
     }
 
+    public class GetMovieTaskCompleteListner implements AsyncTaskGetMovies<ArrayList<MovieDataType>>
+    {
+
+        @Override
+        public void beforeTask()
+        {
+            mProgressBar.setVisibility(View.VISIBLE);
+        }
+        @Override
+        public void onTaskComplete(ArrayList<MovieDataType> moviesData)
+        {
+            mProgressBar.setVisibility(View.INVISIBLE);
+            if (moviesData != null) {
+                showMovieDataView();
+                mMovieAdapter.setData(moviesData);
+            }else{
+                showErro();
+            }
+        }
+    }
+/*
     public class GetMoviesTask extends AsyncTask<String, Void, ArrayList<MovieDataType>> {
         @Override
         protected void onPreExecute() {
@@ -119,6 +148,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
             }
         }
 
+
+
         @Override
         protected void onPostExecute(ArrayList<MovieDataType> moviesData) {
             mProgressBar.setVisibility(View.INVISIBLE);
@@ -129,13 +160,14 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
                 showErro();
             }
         }
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //inflate manue
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.movie, menu);
+        //inflater.inflate(R.menu.movie_grid, menu);
         return true;
     }
 
@@ -156,6 +188,34 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
                 Toast.makeText(getApplicationContext(), "Sort By Most Popular", Toast.LENGTH_LONG).show();
                 mMovieAdapter.setData(null);
                 loadMovieData("popular");
+                return true;
+            case R.id.menu_two:
+                item.setChecked(true);
+                Toast.makeText(getApplicationContext(), "Change Grid size to 2", Toast.LENGTH_LONG).show();
+                if (NUMBER_OF_ITEMS_IN_GRIDVIEW != R.id.menu_two){
+                    resizeGrid(2);
+                }
+                return true;
+            case R.id.menu_three:
+                item.setChecked(true);
+                Toast.makeText(getApplicationContext(), "Change Grid size to 3", Toast.LENGTH_LONG).show();
+                if (NUMBER_OF_ITEMS_IN_GRIDVIEW != R.id.menu_three){
+                    resizeGrid(3);
+                }
+                return true;
+            case R.id.menu_four:
+                item.setChecked(true);
+                Toast.makeText(getApplicationContext(), "Change Grid size to 4", Toast.LENGTH_LONG).show();
+                if (NUMBER_OF_ITEMS_IN_GRIDVIEW != R.id.menu_four){
+                    resizeGrid(3);
+                }
+                return true;
+            case R.id.menu_five:
+                item.setChecked(true);
+                Toast.makeText(getApplicationContext(), "Change Grid size to 5", Toast.LENGTH_LONG).show();
+                if (NUMBER_OF_ITEMS_IN_GRIDVIEW != R.id.menu_two){
+                    resizeGrid(5);
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
